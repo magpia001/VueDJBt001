@@ -96,39 +96,37 @@
                 <div class="card mb-4">
                     <div class="card-header">Prev Post</div>
                     <div class="card-body">
-                        <h5 class="text-primary my-link"> <a href="">{{ prePost.title }}</a></h5>
+                        <h5 class="text-primary my-link" @click="fetchPostDetail(prevPost.id)">[[ prevPost.title ]]</a></h5>
                     </div>
                 </div>
                 <div class="card mb-4">
                     <div class="card-header">Next Post</div>
                     <div class="card-body">
-                        <h5 class="text-primary my-link"> <a href="">{{ nextPost.title }}</a></h5>
+                        <h5 class="text-primary my-link" @click="fetchPostDetail(nextPost.id)">[[ nextPost.title ]]</a></h5>
                     </div>
                 </div>                
                 <!-- Categories widget-->
                 <div class="card mb-4">
                     <div class="card-header">Categories</div>
                     <div class="card-body">
-                        {% for cate in  categories %}
+
                         <span>
                             
-                                <a href="{{ cate.get_absolute_url }}" style="text-decoration: none">
-                                    <span class="text-success my-link">{{ cate.name }}</span>
-                                </a>
+                     
+                                    <span class="text-success my-link"> cate.name </span>
+
                             <span>&emsp;</span>
                         </span>
-                        {% endfor %}
+
                     </div>
                 </div>
                 <div class="card mb-4">
                     <div class="card-header">Tag Cloud</div>
                     <div class="card-body">
-                        {% for tag in tags %}
-                            <a href="{{ tag.get_absolute_url }}" style="text-decoration: none">
-                                <span class="text-success my-link">{{ tag.name }}</span>
-                                </a>
+                                <span class="text-success my-link"> tag.name</span>
+
                             <span>&emsp;</span>
-                        {% endfor %}
+
                     </div>
                 </div>
             </div>
