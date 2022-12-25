@@ -3,6 +3,7 @@ def obj_to_post(obj, flag=True):
     obj의 각 속성을 serialize 해서, dict로 변환함
     serialize: python object ->> (기본 타입) int, float, str 으로 형변환 하는 과정
     :param obj:
+    :param flag: True(모두 보냄, /api/post/99/ 용), False(일부 보냄, /api/post/list/ 용)
     :return:
 
     vars() : 데이터를 dict type으로 변형하는 python 내장 함수
@@ -33,6 +34,8 @@ def obj_to_post(obj, flag=True):
     # vars() 함수 결과에는 manytomay 필드 결과는 없음
     del post['_state'], post['category_id'], post['create_dt']
 
-    if not flag:
+    # /api/post/list/ 일경우, 삭제
+    if not flag:   
             del post['tags'], post['update_dt'], post['description'], post['content']
+
     return post

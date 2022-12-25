@@ -31,21 +31,23 @@
     <div class="container">
         <div class="row">
             <!-- Post title-->
-            <h1 class="fw-bolder mb-1">{{ post.title }}</h1>
+            <h1 class="fw-bolder mb-1">[[ post.title ]]</h1>
             <hr>
             <p>
-                <span>{{ post.update_dt }}</span> &emsp;
+                <span>[[ post.update_dt ]]</span> &emsp;
 
                 <i class="fas fa-copyright"></i> &nbsp;
-                <span class="text-success my-link">{{ post.category }}</span> &emsp;
+                <span class="text-success my-link">[[ post.category ]]</span> &emsp;
                 
                 <i class="fas fa-tag"></i> &nbsp;
                 <span>
-                    <span class="text-success my-link"><a href="">{{ tag }}</a></span>
+                    <span v-for="(tag, index) in post.tags" :key="index">
+                        <span v-if="index !== 0">, </span>
+                        <span>[[ tag ]]</span>
+                    </span>
                 </span> &emsp;
-                
                 <i class="fas fa-heart"></i> &nbsp;
-                <span class="text-success my-link">{{ post.like }}</span> &emsp;
+                <span>[[ post.like ]]</span> &emsp;
             </p>
             <hr>
         </div>
@@ -55,10 +57,10 @@
                 <article>
                     <!-- Preview image figure-->
                     <figure class="mb-4"><img class="img-fluid rounded my-img-h300"
-                            src="{{ post.image.url }}" alt="..." /></figure>
+                            :src="post.image" alt="..." /></figure>
                     <!-- Post content-->
                     <div class="mb-5">
-                        <p class="fs-5 mb-4 my-content"> {{ post.content }}</p>
+                        <p class="fs-5 mb-4 my-content"> [[ post.content ]]</p>
                     </div>
                 </article>
                 <!-- Comments section-->
@@ -81,8 +83,8 @@
                                     <i class="fas fa-user-circle"></i>
                                 </div>
                                 <div class="ms-3">
-                                    <div class="fw-bold">{{ comment.update_dt }}</div>
-                                    <div class="my-content">{{ comment.content }}</div>
+                                    <div class="fw-bold"> comment.update_dt </div>
+                                    <div class="my-content"> comment.content </div>
                                 </div>
                             </div>
                         </div>
@@ -135,9 +137,8 @@
 </section>
 {% endblock %}
 
-{% comment "여기는 주석" %}
 {% block extra-script %}
     {% include 'include/post_detail_vue.html' %}
 {% endblock %}
-{% endcomment %}
+
 

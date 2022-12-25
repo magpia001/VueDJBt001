@@ -1,4 +1,5 @@
 from django.views.generic.list import BaseListView
+from django.views.generic.detail import BaseDetailView
 from django.http import JsonResponse
 
 from blog.models import Post
@@ -23,3 +24,11 @@ class ApiPostLV(BaseListView):
         qs = context['object_list']
         postList = [obj_to_post(obj, False) for obj in qs]
         return JsonResponse(data=postList , safe=False , status=200)
+
+class ApiPostDV(BaseDetailView):
+    model =Post
+    
+    def render_to_response(self, context, **response_kwargs):
+        obj = context['object']
+        post = obj_to_post(obj, True) 
+        return JsonResponse(data=post , safe=True , status=200)
