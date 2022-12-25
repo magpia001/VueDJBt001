@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue.js 3.x</title>
+</head>
+<body>
+    <div id="app_area">
+        <h1>My todo App</h1>
+        <strong>할일 목록 작성</strong>
+        <div class="inputBox">
+            <input type="text" class="name"  v-model="name" placeholder="name...">
+            <input type="text" class="newTodoItem" v-model="newTodoItem" placeholder="type anything welcomed..."
+            v-on:keyup.enter="add_todo()">
+            <button v-on:click="add_todo()">ADD</button>
+        </div>
+        <ul class="todoList">
+            <li v-for="(todo, index) in todoItems">
+                <span>[[ todo.name ]] :: [[ todo.item ]]</span>
+                <span class="removeBtn" v-on:click="remove_todo(todo, index)" >X</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- <script src="https://unpkg.com/vue@next"></script> -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+    <script>
+
+        let todoListApp = {
+            // vue와 django를 연동할 때 꼭 넣어줘야 함.
+            delimiters: ['[[', ']]'],
+            data() {
+                return {
+                    name: '',
+                    newTodoItem: '',
+                    todoItems: [
+                        {name: 'joy', item: 'django와 vue.js 연동 그램 만들기'},
+                        {name: 'smile', item: '이름을 아쓰면 smile이 나옴'},
+                        {name: 'fun', item: 'django는 재미있음'},
+                        {name: 'happy', item: 'vue와 연동 하다니'},
+                    ]
+                }
+            },
+
+            creatred() {
+                console.log("created()....");
+            },
+
+            methods: {
+                add_todo() {
+                    console.log('add name:', this.name, this.newTodoItem);
+                    
+                    // 새로운 todoItem이 입력이 안된경우 return
+                    if(this.newTodoItem == '') return ;
+                    if(this.name == '') this.name = "joy";
+                                        
+                    this.todoItems.push({
+                        name: this.name, item: this.newTodoItem
+                    });
+
+                    // push한 후 입력항목 클리어
+                    this.clear_input();
+                },
+
+                remove_todo(todoItem, index) {
+                    console.log(todoItem);
+                    this.todoItems.splice(index, 1);
+                },
+
+                // 입력 후 클리어
+                clear_input() {
+                    this.name= '';
+                    this.newTodoItem = '';
+                },
+            },
+        }
+
+        Vue.createApp(todoListApp).mount("#app_area")
+    </script>
+
+</body>
+</html>

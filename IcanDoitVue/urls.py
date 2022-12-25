@@ -18,7 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from .views import HomeView
+from .views import HomeView, VueTest
 
 
 urlpatterns = [
@@ -27,6 +27,8 @@ urlpatterns = [
     # add user
     path('', HomeView.as_view(), name='home'),
     path('blog/', include('blog.urls')),
+    path('api/', include('api.urls')),
+    # path('vue_test/', VueTest.as_view())
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -13,4 +13,6 @@ class HomeView(ListView):
     ordering = '-pk'
     template_name = 'home.html'
 
-
+class VueTest(TemplateView):
+    template_name = 'vue_test.html'
+    # template_name = 'vue_test1.html'
