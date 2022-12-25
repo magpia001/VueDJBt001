@@ -37,17 +37,16 @@
                 <span>[[ post.update_dt ]]</span> &emsp;
 
                 <i class="fas fa-copyright"></i> &nbsp;
-                <span class="text-success my-link">[[ post.category ]]</span> &emsp;
+                <span class="text-success my-link" @click="serverPage(post.category, '')">[[ post.category ]]</span> &emsp;
                 
                 <i class="fas fa-tag"></i> &nbsp;
-                <span>
-                    <span v-for="(tag, index) in post.tags" :key="index">
-                        <span v-if="index !== 0">, </span>
-                        <span>[[ tag ]]</span>
-                    </span>
+                <span v-for="(tag, index) in post.tags" :key="index">
+                    <span v-if="index !== 0">, </span>
+                    <span class="text-success my-link" @click="serverPage('', tag)">[[ tag ]]</span>
                 </span> &emsp;
+                
                 <i class="fas fa-heart"></i> &nbsp;
-                <span>[[ post.like ]]</span> &emsp;
+                <span class="text-success my-link" @click="likeCount(post.id)">[[ post.like ]]</span> &emsp;
             </p>
             <hr>
         </div>
@@ -60,7 +59,7 @@
                             :src="post.image" alt="..." /></figure>
                     <!-- Post content-->
                     <div class="mb-5">
-                        <p class="fs-5 mb-4 my-content"> [[ post.content ]]</p>
+                        <p class="fs-5 mb-4 my-content">[[ post.content ]]</p>
                     </div>
                 </article>
                 <!-- Comments section-->
@@ -72,19 +71,19 @@
                                 <textarea name="content" class="form-control" rows="3"
                                     placeholder="Join the discussion and leave a comment!"></textarea>
                                 <div class="d-flex justify-content-end mt-1">
-                                    <div type="reset" class="btn btn-outline-secondary btn-sm me-2">RESET</div>
-                                    <div type="submit" class="btn btn-primary btn-sm">SUBMIT</div>
+                                    <div @click="resetForm" class="btn btn-outline-secondary btn-sm me-2">RESET</div>
+                                    <div @click="submitForm" class="btn btn-primary btn-sm">SUBMIT</div>
                                 </div>
                             </form>
                             
                             <!-- Comment List -->
-                            <div  id="{{ comment.id }}" class="d-flex mb-4">
+                            <div v-for="comment in commentList" :key="comment.id" class="d-flex mb-4">
                                 <div class="flex-shrink-0 my-comment-icon">
                                     <i class="fas fa-user-circle"></i>
                                 </div>
                                 <div class="ms-3">
-                                    <div class="fw-bold"> comment.update_dt </div>
-                                    <div class="my-content"> comment.content </div>
+                                    <div class="fw-bold">[[ comment.update_dt ]]</div>
+                                    <div class="my-content">[[ comment.content ]]</div>
                                 </div>
                             </div>
                         </div>
@@ -96,37 +95,32 @@
                 <div class="card mb-4">
                     <div class="card-header">Prev Post</div>
                     <div class="card-body">
-                        <h5 class="text-primary my-link" @click="fetchPostDetail(prevPost.id)">[[ prevPost.title ]]</a></h5>
+                        <h5 class="text-primary my-link" @click="fetchPostDetail(prevPost.id)">[[ prevPost.title ]]</h5>
                     </div>
                 </div>
                 <div class="card mb-4">
                     <div class="card-header">Next Post</div>
                     <div class="card-body">
-                        <h5 class="text-primary my-link" @click="fetchPostDetail(nextPost.id)">[[ nextPost.title ]]</a></h5>
+                        <h5 class="text-primary my-link" @click="fetchPostDetail(nextPost.id)">[[ nextPost.title ]]</h5>
                     </div>
                 </div>                
                 <!-- Categories widget-->
                 <div class="card mb-4">
                     <div class="card-header">Categories</div>
                     <div class="card-body">
-
-                        <span>
-                            
-                     
-                                    <span class="text-success my-link"> cate.name </span>
-
-                            <span>&emsp;</span>
+                        <span v-for="(category, index) in cateList" :key="category.id">
+                            <span v-if="index !== 0">&emsp;</span>
+                            <span class="text-success my-link" @click="serverPage(category, '')">[[ category ]]</span>
                         </span>
-
                     </div>
                 </div>
                 <div class="card mb-4">
                     <div class="card-header">Tag Cloud</div>
                     <div class="card-body">
-                                <span class="text-success my-link"> tag.name</span>
-
-                            <span>&emsp;</span>
-
+                        <span v-for="(tag, index) in tagList" :key="tag.id">
+                            <span v-if="index !== 0">&emsp;</span>
+                            <span class="text-success my-link" @click="serverPage('', tag)">[[ tag ]]</span>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -138,5 +132,3 @@
 {% block extra-script %}
     {% include 'include/post_detail_vue.html' %}
 {% endblock %}
-
-
